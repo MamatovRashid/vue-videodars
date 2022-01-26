@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style1.css">
+    </head>
+    <body>
+        <div id="app" class="app">
+            <div class="box">
+                <input type="text" v-model="number">
+                <div>
+                    <button @click="decrement">-</button>
+                    <button @click="increment">+</button>
+                    <p>{{ count }}</p>
+                    <button @click="clear">C</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    number: '',
+                    count: 0
+                },
+                methods: {
+                    increment() {
+                        if (parseInt(this.number)) {
+                            this.count += parseInt(this.number)
+                        } else {
+                            this.count ++
+                        }
+                    },
+                    decrement() {
+                        if (this.count > 0) {
+                            if (parseInt(this.number)) {
+                                this.count -= parseInt(this.number)
+                            } else {
+                                this.count --
+                            }
+                        }
+                    },
+                    clear() {
+                        this.count = 0
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
