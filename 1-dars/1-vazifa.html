@@ -37,7 +37,7 @@
                         }
                     },
                     decrement() {
-                        if (this.count > 0) {
+                        if (this.count > 0 && this.count >= this.number) {
                             if (parseInt(this.number)) {
                                 this.count -= parseInt(this.number)
                             } else {
