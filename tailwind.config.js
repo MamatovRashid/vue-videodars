@@ -281,6 +281,7 @@ module.exports = {
         '"Courier New"',
         "monospace",
       ],
+      rubik: "Rubik Beastly"
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
