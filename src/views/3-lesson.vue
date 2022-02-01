@@ -85,11 +85,9 @@ export default {
       this.counts[id].disabled = true;
       if (this.turn) {
         this.X.push(id);
-        this.X.sort();
         this.counts[id].text = "X";
       } else {
         this.O.push(id);
-        this.O.sort();
         this.counts[id].text = "O";
       }
       this.turn = !this.turn;
