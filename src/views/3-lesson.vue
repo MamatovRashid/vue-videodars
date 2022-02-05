@@ -1,4 +1,102 @@
 <template>
+  <div class="flex flex-col pt-20">
+    <div class="flex justify-center mb-3">
+      <p class="text-xl font-mono px-3">X: {{ wincounX }}</p>
+      <p class="text-xl font-mono px-3">O: {{ wincounO }}</p>
+    </div>
+    <div class="box relative grid grid-cols-3 grid-rows-3 gap-0.5 bg-black mx-auto">
+      <button class="w-52 h-52 bg-white text-6xl" :disabled="btn != ' '" ref="button" v-for="(btn, index) in buttons" :key="index" @click="handleClick(index)">{{ btn }}</button>
+      <div class="absolute flex justify-center items-center w-full h-full bg-gray-50 bg-opacity-50" v-show="show">
+        <div class="m-auto relative z-10 text-4xl text-gray-700 font-bold uppercase">{{ winnerName }}</div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <button class="bg-blue-600 text-white rounded px-3 py-1" @click="restart">Restart</button>
+    </div>
+  </div>
+</template>
+
+<script>
+const X = "X";
+const O = "O";
+const EMPTY = " ";
+export default {
+  name: "TicTacToe",
+  data() {
+    return {
+      turn: X,
+      wincounX: 0,
+      wincounO: 0,
+      show: false,
+      buttons: [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+      winningLines: [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ],
+      winnerName: "",
+      clicksCount: 0,
+      object: {
+        property: 10,
+      },
+    };
+  },
+  methods: {
+    handleClick(index) {
+      // this.buttons[index] = this.turn; not works in Vue 2
+      this.$set(this.buttons, index, this.turn);
+      // this.$set(this.object, property, 15);
+      this.turn = this.turn === X ? O : X;
+      this.clicksCount++;
+      if (this.clicksCount >= 5) {
+        this.checkForWin();
+      }
+    },
+    checkForWin() {
+      const isXWon = this.winningLines.some((line) => line.every((index) => this.buttons[index] === X));
+      const isOWon = this.winningLines.some((line) => line.every((index) => this.buttons[index] === O));
+      if (isXWon) {
+        this.winnerName = "X yutdi!";
+        this.wincounX++;
+        this.show = true;
+        setTimeout(() => {
+          this.restart();
+        }, 1000);
+      }
+      if (isOWon) {
+        this.winnerName = "O yutdi!";
+        this.wincounO++;
+        this.show = true;
+        setTimeout(() => {
+          this.restart();
+        }, 1000);
+      }
+      if (this.clicksCount === 9) {
+        this.winnerName = "Durrang!";
+        this.show = true;
+        setTimeout(() => {
+          this.restart();
+        }, 1000);
+      }
+    },
+    restart() {
+      this.clicksCount = 0;
+      this.buttons = this.buttons.map(() => EMPTY);
+      this.show = false;
+    },
+  },
+};
+</script>
+
+<style lang="scss"></style>
+
+<!--
+<template>
   <div class="w-96 mx-auto mt-20">
     <div class="flex my-2">
       <div class="w-1/2 text-2xl font-medium">X: {{ winnercountX }}</div>
@@ -125,3 +223,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
+-->
